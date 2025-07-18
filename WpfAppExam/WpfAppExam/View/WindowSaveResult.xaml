@@ -1,0 +1,75 @@
+﻿<Window x:Class="WpfAppExam.WindowSaveResult"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfAppExam"
+        xmlns:models="clr-namespace:WpfAppExam.Model"
+        xmlns:data="clr-namespace:WpfAppExam.Data"
+        xmlns:viewmodel1="clr-namespace:WpfAppExam.ResultViewModel"
+        xmlns:service="clr-namespace:WpfAppExam.Service"
+        mc:Ignorable="d"
+        Title="WindowSaveResult" Height="450" Width="800" MinHeight="450"  MinWidth="800">
+    <Window.DataContext>
+        <viewmodel1:ResultViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <service:ResultConverter x:Key="ResultConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="150*"/>
+            <RowDefinition Height="150*"/>
+            <RowDefinition Height="150*"/>
+            <RowDefinition Height="150*"/>
+            <RowDefinition Height="150*"/>
+            <RowDefinition Height="250*"/>
+            <RowDefinition Height="250*"/>
+            <RowDefinition Height="20*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="490*"/>
+            <ColumnDefinition Width="106*"/>
+            <ColumnDefinition Width="185*"/>
+            <ColumnDefinition Width="19*"/>
+        </Grid.ColumnDefinitions>
+        <WrapPanel>
+            <TextBlock Margin="0,0,10,0" Text="Filter" Grid.Column="0" Grid.Row="0" FontSize="20"/>
+            <TextBox x:Name="FilterBox" Text="{Binding FilterByName,UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" Grid.Row="0" Margin="2" FontSize="20" Width="400"/>
+        </WrapPanel>
+        
+        <TextBlock Text="Name"  Grid.Column="1" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="56" Grid.Row="1" Height="27"  />
+        <TextBox x:Name="nametb" Grid.Column="2" Grid.Row="1" FontSize="20" Margin="5,5,5,5" />
+        <TextBlock Text="Speed"  Grid.Column="1" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="56" Grid.Row="2" Height="26"  />
+        <TextBox Grid.Column="2" x:Name="speedtb" Grid.Row="2" FontSize="20" Margin="5,5,5,5" IsReadOnly="True" />
+        <TextBlock Text="Fails"  Grid.Column="1" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="56" Grid.Row="3" Height="27"  />
+        <TextBox Grid.Column="2" x:Name="failstb" Grid.Row="3" FontSize="20" Margin="5,5,5,5" IsReadOnly="True" />
+        <TextBlock Text="Time"  Grid.Column="1" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="56" Grid.Row="4" Height="27"  />
+        <TextBox Grid.Column="2" x:Name="timeSectb" Grid.Row="4" FontSize="20" Margin="5,5,5,5" IsReadOnly="True" />
+        <TextBlock Text="Date"  Grid.Column="1" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="56" Grid.Row="5" Height="27"  />
+        <DatePicker x:Name="dp" Grid.Column="2" Grid.Row="5" FontSize="20" Margin="5" IsEnabled="false"/>
+        <DataGrid x:Name="datagrid" FontSize="15" Grid.Row="1" Grid.RowSpan="8" ItemsSource="{Binding ItemsResults}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="150" Binding="{Binding Name}"  Header="Name"/>
+                <DataGridTextColumn Width="50" Binding="{Binding Speed}" Header="Speed" />
+                <DataGridTextColumn Width="120" Binding="{Binding NumberFails}" Header="Number of fails" />
+                <DataGridTextColumn Width="45" Binding="{Binding TimeSeconds}" Header="Time"/>
+                <DataGridTextColumn Width="*" Binding="{Binding dateTime, StringFormat=dd/MM/yyyy}" Header="Date and time" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Command="{Binding AddResult}" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Content="Add" FontSize="25" Margin="15" Width="200">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource ResultConverter}">
+                    <Binding ElementName="nametb" Path="Text"/>
+                    <Binding ElementName="speedtb" Path="Text"/>
+                    <Binding ElementName="failstb" Path="Text"/>
+                    <Binding ElementName="timeSectb" Path="Text"/>
+                    <Binding ElementName="dp" Path="SelectedDate"/>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
+        <Button Command="{Binding SaveResults}" CommandParameter="{Binding ElementName=datagrid, Path=Items}" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Content="Save" FontSize="25" Margin="15" Width="200">
+        </Button>
+    </Grid>
+</Window>

@@ -1,0 +1,22 @@
+﻿<Window x:Class="WpfAppExam.TestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfAppExam"
+        mc:Ignorable="d"
+        Title="TestWindow" Height="406" Width="737" MaxHeight="406" MaxWidth="737" MinHeight="406" MinWidth="737">
+    <Canvas>
+        <TextBlock Text="Select Palianytsya" FontSize="30" Canvas.Left="234" Canvas.Top="39" />
+        <Button x:Name="Palianytsia" Width="300" Canvas.Left="20" Canvas.Top="100" Click="Palianytsia_Click">
+            <Button.Content>
+                <Image Source="/p1.jpg" />
+            </Button.Content>
+        </Button>
+        <Button x:Name="Polunytsya" Width="310"  Canvas.Right="20" Canvas.Top="100" Height="192" Canvas.Left="380" Click="Polunytsya_Click">
+            <Button.Content>
+                <Image Source="/p2.jpeg" />
+            </Button.Content>
+        </Button>
+    </Canvas>
+</Window>
